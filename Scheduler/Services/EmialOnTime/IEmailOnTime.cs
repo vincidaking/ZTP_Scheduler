@@ -5,13 +5,11 @@ using System.Timers;
 
 namespace Scheduler.Services
 {
-    public interface IEmialOnTime
+    public interface IEmailOnTime
     {
-
         void OnTimedEvent(Object source, ElapsedEventArgs e);
         void Start();
 
         void StopProgram();
-
     }
 }

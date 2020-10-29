@@ -14,7 +14,7 @@ using System.Timers;
 namespace Scheduler.Services
 {
 
-    public class EmailOnTime : IEmialOnTime
+    public class EmailOnTime : IEmailOnTime
     {
         private System.Timers.Timer aTimer;
         private int index = 0;
@@ -27,7 +27,6 @@ namespace Scheduler.Services
 
             using var reader = new StreamReader(@"C:\Users\Kamil\Downloads\Scheduler\Scheduler\Scheduler\Date\mailing.csv");
 
-                  
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
             int start = index;
@@ -78,10 +77,10 @@ namespace Scheduler.Services
         }
     }
 
-    
 
-    
 
-  
+
+
+
 
 }
