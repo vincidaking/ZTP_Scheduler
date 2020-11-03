@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 
-namespace Scheduler.Services
+namespace SchedulerEmailSender.Interface
 {
-    public interface IEmailOnTime
+    public interface IEmailServices
     {
         void OnTimedEvent(Object source, ElapsedEventArgs e);
         void Start();
-
         void StopProgram();
     }
 }

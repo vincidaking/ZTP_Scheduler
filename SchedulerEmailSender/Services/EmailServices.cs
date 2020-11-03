@@ -1,8 +1,10 @@
 ﻿using CsvHelper;
-using Scheduler.Model;
+using SchedulerEmailSender.Interface;
+using SchedulerEmailSender.Model;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,10 +13,9 @@ using System.Net.Mail;
 using System.Text;
 using System.Timers;
 
-namespace Scheduler.Services
+namespace SchedulerEmailSender.Services
 {
-
-    public class EmailOnTime : IEmailOnTime
+    public class EmailServices : IEmailServices
     {
         private System.Timers.Timer aTimer;
         private int index = 0;
@@ -25,7 +26,8 @@ namespace Scheduler.Services
             const string fromPassword = "Qwerty1111!";
             const string subject = "Promocja w Company!";
 
-            using var reader = new StreamReader(@"C:\Users\Kamil\Downloads\Scheduler\Scheduler\Scheduler\Date\mailing.csv");
+            //using var reader = new StreamReader(@"C:\Users\Kamil\Desktop\MGR\semestr 1\ZTP\ZTP_Scheduler\Scheduler\Data\mailing.csv");
+            using var reader = new StreamReader(ConfigurationManager.AppSettings["MalingCSV"]);
 
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
@@ -76,11 +78,4 @@ namespace Scheduler.Services
             aTimer.Stop();
         }
     }
-
-
-
-
-
-
-
 }

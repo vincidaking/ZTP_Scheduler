@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Scheduler.Model
+namespace SchedulerEmailSender.Model
 {
     public class Person
     {
