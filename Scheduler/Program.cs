@@ -38,47 +38,34 @@ namespace Scheduler
 
 
             //todo data context     tego nie czaje, data context zwykle chyba prze bazie danych byl 
-           
+
             //todo loger w serwisie
             //todo ścieżka względna do pliku (relative path)
             //todo generowanie treści: mamy łączenie stringów, ma być np. html template
 
 
-            var collection = new ServiceCollection()          
+            var collection = new ServiceCollection()
             .AddScoped<ILogServices, LogServices>()
             .AddScoped<IHangFire, HangFire>();
 
-
             IServiceProvider serviceProvider = collection.BuildServiceProvider();
 
-            
             var logger = serviceProvider.GetService<ILogServices>();
             var hangfire = serviceProvider.GetService<IHangFire>();
-
-
 
             Log.Logger = new LoggerConfiguration()
                  .MinimumLevel.Error()
                  .WriteTo.Console()
-                 .WriteTo.File(ConfigurationManager.AppSettings["Log"])
-                 
-                 .CreateLogger();
+                 .WriteTo.File(ConfigurationManager.AppSettings["LogPath"])
 
+                 .CreateLogger();
 
             //logger.LogTest();
 
-
-           
-
             hangfire.StartServer();
-
-            
-
 
             Console.WriteLine("Aplikacja została włączona o {0:HH:mm:ss.fff}", DateTime.Now);
             Console.ReadLine();
-
-           
 
             if (serviceProvider is IDisposable)
             {

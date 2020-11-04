@@ -13,27 +13,21 @@ namespace SchedulerHangfire.Services
     public class HangFire : IHangFire
     {
 
-        
         public void StartServer()
         {
 
             var collection = new ServiceCollection()
            .AddScoped<IEmailServices, EmailServices>();
 
-
             IServiceProvider serviceProvider = collection.BuildServiceProvider();
 
             var emailOnTime = serviceProvider.GetService<IEmailServices>();
 
-
             GlobalConfiguration.Configuration
                 //.UseSqlServerStorage(@"Server=.\SQLEXPRESS; Database=Hangfire.Sample; Integrated Security=True");
-                
+
                 .UseMemoryStorage();
-
-
             int countPerson = new CSV().CountCSV();
-            
 
             using (var server = new BackgroundJobServer())
             {
@@ -42,7 +36,6 @@ namespace SchedulerHangfire.Services
 
                 int index = 0;
                 int end = 50;
-
 
                 var tempListPerson = new CSV().ListCSV(index, end);
                 for (int i = 0; i < countPerson; i++)
@@ -55,30 +48,18 @@ namespace SchedulerHangfire.Services
 
                     //ten timer cos oszukuje i nie dziala tak jak bym oczekiwal 
 
-                    BackgroundJob.Schedule(() =>emailOnTime.Send(tempListPerson[i-(partia*50)]) ,
+                    BackgroundJob.Schedule(() => emailOnTime.Send(tempListPerson[i - (partia * 50)]),
                         TimeSpan.FromSeconds(time));
-
-                    
-
 
                     index++;
                     end++;
 
-                    if(index%50==0) tempListPerson = new CSV().ListCSV(index, end);
+                    if (index % 50 == 0) tempListPerson = new CSV().ListCSV(index, end);
                 }
-                          
+
                 //Console.WriteLine("Hangfire Server started. Press any key to exit...");
                 //Console.ReadKey();
             }
-
-
         }
-
-        
-
-
-
-
-
     }
 }

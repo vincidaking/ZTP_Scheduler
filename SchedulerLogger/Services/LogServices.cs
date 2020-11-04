@@ -12,14 +12,12 @@ namespace SchedulerLogger.Services
     {
         public void LogTest()
         {
-           var log  = new LoggerConfiguration()
-                 .MinimumLevel.Error()
-                 //.WriteTo.ToString()
-                 //.WriteTo.File(ConfigurationManager.AppSettings["Log"])
-                 .CreateLogger()
-                 ;
-
-
+            var log = new LoggerConfiguration()
+                  .MinimumLevel.Error()
+                  //.WriteTo.ToString()
+                  //.WriteTo.File(ConfigurationManager.AppSettings["Log"])
+                  .CreateLogger()
+                  ;
             //Console.WriteLine(log);
         }
     }

@@ -9,6 +9,5 @@ namespace SchedulerEmailSender.Interface
     public interface IEmailServices
     {
         void Send(Person person);
-        
     }
 }

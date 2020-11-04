@@ -15,7 +15,7 @@ namespace SchedulerHangfire.Services
 
         public List<Person> ListCSV(int startIndex, int endIndex)
         {
-            using var reader = new StreamReader(ConfigurationManager.AppSettings["MalingCSV"]);
+            using var reader = new StreamReader(ConfigurationManager.AppSettings["MalingCSVPath"]);
 
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
@@ -25,17 +25,12 @@ namespace SchedulerHangfire.Services
 
         public int CountCSV()
         {
-            using var reader = new StreamReader(ConfigurationManager.AppSettings["MalingCSV"]);
+            using var reader = new StreamReader(ConfigurationManager.AppSettings["MalingCSVPath"]);
 
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
             return csv.GetRecords<Person>().Count();
 
         }
-
-
     }
-
-
 }
-

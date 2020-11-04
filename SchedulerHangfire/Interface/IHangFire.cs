@@ -6,8 +6,6 @@ namespace SchedulerHangfire.Interface
 {
     public interface IHangFire
     {
-
-        void StartServer();
-       
-    }
+                void StartServer();
+           }
 }

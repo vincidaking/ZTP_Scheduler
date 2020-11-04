@@ -6,8 +6,6 @@ namespace SchedulerLogger.Interface
 {
     public interface ILogServices
     {
-
         void LogTest();
-
     }
 }
