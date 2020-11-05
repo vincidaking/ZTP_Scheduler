@@ -20,16 +20,17 @@ namespace SchedulerEmailSender.Services
 
         public void Send(Person person)
         {
-            var fromAddress = new MailAddress("testcsparp@gmail.com", "From Company");
-            const string fromPassword = "Qwerty1111!";
-            const string subject = "Promocja w Company!";
+            var fromAddress = new MailAddress(ConfigurationManager.AppSettings["MailAddress"], "From Company");
+            string fromPassword = ConfigurationManager.AppSettings["MailPassword"];
+            string subject = ConfigurationManager.AppSettings["MessageSubject"];
+            Console.WriteLine(subject);
 
             var toAddress = new MailAddress(person.Email, "To" + person.FirstName);
             var body = "Witaj " + person.FirstName + " masz u nas " + person.Discount * 100 + "% zniżki!";
             var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
+                Host = ConfigurationManager.AppSettings["SmtpHost"],
+                Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]),
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = true,
