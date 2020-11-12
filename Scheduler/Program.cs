@@ -53,10 +53,16 @@ namespace Scheduler
             var logger = serviceProvider.GetService<ILogServices>();
             var hangfire = serviceProvider.GetService<IHangFire>();
 
+
+            Assembly assembly = Assembly.GetEntryAssembly();
+
+            String dir = Path.GetDirectoryName(assembly.Location);
+            String file = ConfigurationManager.AppSettings[$"MalingCSVPath"];
+
             Log.Logger = new LoggerConfiguration()
                  .MinimumLevel.Error()
                  .WriteTo.Console()
-                 .WriteTo.File(ConfigurationManager.AppSettings["LogPath"])
+                 .WriteTo.File($"{dir}/{file}")
 
                  .CreateLogger();
 
