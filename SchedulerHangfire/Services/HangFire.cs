@@ -48,8 +48,11 @@ namespace SchedulerHangfire.Services
 
                     //ten timer cos oszukuje i nie dziala tak jak bym oczekiwal 
 
-                    BackgroundJob.Schedule(() => emailOnTime.Send(tempListPerson[i - (partia * 50)]),
-                        TimeSpan.FromSeconds(time));
+                    //BackgroundJob.Schedule(() => emailOnTime.Send(tempListPerson[i - (partia * 50)]),
+                    //    TimeSpan.FromSeconds(time));
+
+
+                    emailOnTime.Send(tempListPerson[i - (partia * 50)]);
 
                     index++;
                     end++;
