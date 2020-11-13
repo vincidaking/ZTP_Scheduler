@@ -26,4 +26,12 @@
     <ProjectReference Include="..\SchedulerLogger\SchedulerLogger.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\mailing.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Log\myapp.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
