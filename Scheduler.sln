@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler", "Scheduler\Scheduler.csproj", "{A6756389-B4DD-4C9E-94DF-BA631BB49DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerEmailSender", "SchedulerEmailSender\SchedulerEmailSender.csproj", "{EEF85CC6-4CEC-4F9F-859C-2B4E6B0DAD6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchedulerEmailSender", "SchedulerEmailSender\SchedulerEmailSender.csproj", "{EEF85CC6-4CEC-4F9F-859C-2B4E6B0DAD6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerLogger", "SchedulerLogger\SchedulerLogger.csproj", "{65CC62CA-F5FE-4C5A-9096-A995F4953006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchedulerLogger", "SchedulerLogger\SchedulerLogger.csproj", "{65CC62CA-F5FE-4C5A-9096-A995F4953006}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerHangfire", "SchedulerHangfire\SchedulerHangfire.csproj", "{D3E3669D-2C96-41BE-B7FC-CB1CBF42A7B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchedulerHangfire", "SchedulerHangfire\SchedulerHangfire.csproj", "{D3E3669D-2C96-41BE-B7FC-CB1CBF42A7B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchedulerRazorTemplates", "ExampleRazorTemplatesLibrary\SchedulerRazorTemplates.csproj", "{B359BA5D-5AC2-4DF4-803F-6BF284BC9989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D3E3669D-2C96-41BE-B7FC-CB1CBF42A7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3E3669D-2C96-41BE-B7FC-CB1CBF42A7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3E3669D-2C96-41BE-B7FC-CB1CBF42A7B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B359BA5D-5AC2-4DF4-803F-6BF284BC9989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B359BA5D-5AC2-4DF4-803F-6BF284BC9989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B359BA5D-5AC2-4DF4-803F-6BF284BC9989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B359BA5D-5AC2-4DF4-803F-6BF284BC9989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

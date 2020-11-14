@@ -1,59 +1,34 @@
-﻿using CsvHelper;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
+using Microsoft.Extensions.DependencyInjection;
 using MimeKit;
+using Razor.Templating.Core;
 using SchedulerEmailSender.Interface;
 using SchedulerEmailSender.Model;
+
 using Serilog;
-
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-
-using System.Text;
-using System.Timers;
+using System.Threading.Tasks;
 
 namespace SchedulerEmailSender.Services
 {
     public class EmailServices : IEmailServices
     {
-
-        public void Send(Person person)
+        public async Task<string> HtmlString(Person person)
         {
-            //var fromAddress = new MailAddress(ConfigurationManager.AppSettings["MailAddress"], "From Company");
-            //string fromPassword = ConfigurationManager.AppSettings["MailPassword"];
-            //string subject = ConfigurationManager.AppSettings["MessageSubject"];
-            //Console.WriteLine(subject);
+            return await RazorTemplateEngine.RenderAsync("/Views/View.cshtml", person);
 
-            //var toAddress = new MailAddress(person.Email, "To" + person.FirstName);
-            //var body = "Witaj " + person.FirstName + " masz u nas " + person.Discount * 100 + "% zniżki!";
+            //return html;
+        }
 
+        public async Task Send(Person person)
 
-
-
-            //var smtp = new SmtpClient
-            //{
-            //    Host = ConfigurationManager.AppSettings["SmtpHost"],
-            //    Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]),
-            //    EnableSsl = true,
-            //    DeliveryMethod = SmtpDeliveryMethod.Network,
-            //    UseDefaultCredentials = true,
-            //    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-            //};
-            //using var message = new MailMessage(fromAddress, toAddress)
-            //{
-            //    Subject = subject,
-            //    Body = body
-            //};
-            //smtp.Send(message);
-
-            //Log.Error("{@Person}", person);
+        
+        {
 
 
            
+
 
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("From Company", ConfigurationManager.AppSettings["MailAddress"]));
@@ -63,11 +38,9 @@ namespace SchedulerEmailSender.Services
 
             var builder = new BodyBuilder();
 
-            //builder.HtmlBody = $"<p>Hey {person.FirstName},<br> otrzymujesz od nas {person.Discount}% " +
-            //    $"znizki na najblizsze zakupy" +
-            //    $"<p> Zapraszamy";
-
-            
+            person.Discount = person.Discount * 10.0;
+                  
+            builder.HtmlBody = await HtmlString(person);
 
             message.Body = builder.ToMessageBody();
 
@@ -94,4 +67,8 @@ namespace SchedulerEmailSender.Services
 
         
     }
+
+
+    
+
 }

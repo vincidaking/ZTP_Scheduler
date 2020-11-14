@@ -21,6 +21,10 @@ using Hangfire.MemoryStorage;
 using SchedulerHangfire.Interface;
 using SchedulerHangfire.Services;
 
+using System.Collections.Generic;
+using Razor.Templating.Core;
+using System.Threading.Tasks;
+
 namespace Scheduler
 {
 
@@ -59,14 +63,36 @@ namespace Scheduler
             String dir = Path.GetDirectoryName(assembly.Location);
             String file = ConfigurationManager.AppSettings[$"MalingCSVPath"];
 
-            Log.Logger = new LoggerConfiguration()
-                 .MinimumLevel.Error()
-                 .WriteTo.Console()
-                 .WriteTo.File($"{dir}/{file}")
+            //Log.Logger = new LoggerConfiguration()
+            //     .MinimumLevel.Error()
+            //     .WriteTo.Console()
+            //     .WriteTo.File($"{dir}/{file}")
 
-                 .CreateLogger();
+            //     .CreateLogger();
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Error()
+                .WriteTo.Console()
+                .WriteTo.File(ConfigurationManager.AppSettings[$"txt"])
+
+                .CreateLogger();
 
             //logger.LogTest();
+
+
+
+            //var model = new ExampleModel()
+            //{
+            //    FirstName = "This text is rendered from Razor Views using Razor.Templating.Core",
+                
+            //};
+          
+            //var html = await RazorTemplateEngine.RenderAsync("/Views/ExampleView.cshtml", model);
+
+            //Console.WriteLine(html);
+
+
+
 
             hangfire.StartServer();
 

@@ -19,14 +19,14 @@ namespace SchedulerHangfire.Services
         {
             Assembly assembly = Assembly.GetEntryAssembly();
 
-            String dir = Path.GetDirectoryName(assembly.Location);
-            String file = ConfigurationManager.AppSettings[$"MalingCSVPath"];
-            this.csvPath = $"{dir}/{file}";
+            //String dir = Path.GetDirectoryName(assembly.Location);
+            //String file = ConfigurationManager.AppSettings[$"MalingCSVPath"];
+            //this.csvPath = $"{dir}/{file}";
         }
 
         public List<Person> ListCSV(int startIndex, int endIndex)
         {
-            using var reader = new StreamReader(csvPath);
+            using var reader = new StreamReader(ConfigurationManager.AppSettings[$"csv"]);
 
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
@@ -35,7 +35,7 @@ namespace SchedulerHangfire.Services
 
         public int CountCSV()
         {
-            using var reader = new StreamReader(csvPath);
+            using var reader = new StreamReader(ConfigurationManager.AppSettings[$"csv"]);
 
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 

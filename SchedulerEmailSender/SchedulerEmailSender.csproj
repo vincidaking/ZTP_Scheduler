@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
@@ -10,9 +10,19 @@
     <PackageReference Include="Hangfire.Core" Version="1.7.17" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
     <PackageReference Include="MailKit" Version="2.9.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
     <PackageReference Include="MimeKit" Version="2.9.2" />
+    <PackageReference Include="Razor.Templating.Core" Version="1.0.1" />
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
+
+
+
+
+
+  <!--<ItemGroup>
+    <ProjectReference Include="..\ExampleRazorTemplatesLibrary\SchedulerRazorTemplates.csproj" />
+  </ItemGroup>-->
 
 </Project>
