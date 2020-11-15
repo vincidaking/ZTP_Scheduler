@@ -16,7 +16,6 @@ namespace SchedulerEmailSender.Services
     {
         public async Task<string> HtmlString(Person person)
         {
-            person.Discount = person.Discount * 10.0;
             return await RazorTemplateEngine.RenderAsync("/Views/View.cshtml", person);
 
             //return html;
@@ -27,6 +26,10 @@ namespace SchedulerEmailSender.Services
         
         {
 
+
+           
+
+
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("From Company", ConfigurationManager.AppSettings["MailAddress"]));
             message.To.Add(new MailboxAddress(person.FirstName, WhiteSpace.RemoveWhitespace(person.Email)));
@@ -35,8 +38,10 @@ namespace SchedulerEmailSender.Services
 
             var builder = new BodyBuilder();
 
+            person.Discount = person.Discount * 10.0;
                   
             builder.HtmlBody = await HtmlString(person);
+
             message.Body = builder.ToMessageBody();
 
             using (var client = new SmtpClient())
