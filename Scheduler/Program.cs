@@ -1,37 +1,19 @@
 ﻿using System;
-using System.Timers;
-using CsvHelper;
-using Serilog;
-using System.Globalization;
-using System.IO;
-using Bogus;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using System.Diagnostics;
-using SchedulerEmailSender.Interface;
-using SchedulerEmailSender.Services;
 using System.Configuration;
-using SchedulerLogger.Interface;
-using SchedulerLogger.Services;
-using Hangfire;
-using Hangfire.MemoryStorage;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SchedulerHangfire.Interface;
-using SchedulerHangfire.Services;
-
-using System.Collections.Generic;
-using Razor.Templating.Core;
-using System.Threading.Tasks;
+using Serilog;
 
 namespace Scheduler
 {
 
     class Program
     {
-
-        static void Main(string[] args)
+        
+        static void Main(string[] args )
         {
 
             //Zrobione czy dobrze nie wiem 
@@ -48,61 +30,75 @@ namespace Scheduler
             //todo generowanie treści: mamy łączenie stringów, ma być np. html template
 
 
-            var collection = new ServiceCollection()
-            .AddScoped<ILogServices, LogServices>()
-            .AddScoped<IHangFire, HangFire>();
-
-            IServiceProvider serviceProvider = collection.BuildServiceProvider();
-
-            var logger = serviceProvider.GetService<ILogServices>();
-            var hangfire = serviceProvider.GetService<IHangFire>();
-
-
-            Assembly assembly = Assembly.GetEntryAssembly();
-
-            String dir = Path.GetDirectoryName(assembly.Location);
-            String file = ConfigurationManager.AppSettings[$"MalingCSVPath"];
-
-            //Log.Logger = new LoggerConfiguration()
-            //     .MinimumLevel.Error()
-            //     .WriteTo.Console()
-            //     .WriteTo.File($"{dir}/{file}")
-
-            //     .CreateLogger();
-
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Error()
-                .WriteTo.Console()
-                .WriteTo.File(ConfigurationManager.AppSettings[$"txt"])
+              .Enrich.FromLogContext()
+              .WriteTo.Console()
+              .WriteTo.File(ConfigurationManager.AppSettings[$"txt"], rollingInterval: RollingInterval.Day)
+              .CreateLogger();
 
-                .CreateLogger();
+            //CreateHostBuilder(args).Build().Run();
 
-            //logger.LogTest();
+            IServiceCollection services = new ServiceCollection();
+            // Startup.cs finally :)
+            Startup startup = new Startup();
+            startup.ConfigureServices(services);
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            //configure console logging
+            //serviceProvider
+            //    .GetService<ILoggerFactory>()
+            //    .AddConsole(LogLevel.Debug);
+
+            //var logger = serviceProvider
+            //    .GetService<ILoggerFactory>()
+            //    .CreateLogger<Program>();
+
+            
+
+            Log.Information("dziala");
 
 
+            // Get Service and call method
 
-            //var model = new ExampleModel()
-            //{
-            //    FirstName = "This text is rendered from Razor Views using Razor.Templating.Core",
-                
-            //};
-          
-            //var html = await RazorTemplateEngine.RenderAsync("/Views/ExampleView.cshtml", model);
+            var service = serviceProvider.GetService<IHangFire>();
+            service.StartServer();
 
-            //Console.WriteLine(html);
+            int temp;
 
-
-
-
-            hangfire.StartServer();
-
-            Console.WriteLine("Aplikacja została włączona o {0:HH:mm:ss.fff}", DateTime.Now);
-            Console.ReadLine();
-
-            if (serviceProvider is IDisposable)
+            do
             {
-                ((IDisposable)serviceProvider).Dispose();
-            }
+                Log.Information("wcisnij 0 [ponowne wyslanie emial]");
+                temp = int.Parse(Console.ReadLine());
+                service.StartServer();
+
+            } while (temp == 0);
+
+
         }
+
+        //public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //   Host.CreateDefaultBuilder(args)
+        //       .UseSerilog();
+        //.UseWindowsService()
+        //.ConfigureServices((_, services) =>
+        //{
+        //    services
+        //    .AddLogging()
+        //    .AddTransient<IHangFire, HangFire>()
+        //    .AddTransient<IEmailServices, EmailServices>()
+        //    .AddFluentEmail(ConfigurationManager.AppSettings[$"MailAddress"])
+        //    .AddRazorRenderer()
+        //    .AddSmtpSender(ConfigurationManager.AppSettings[$"SmtpHost"],
+        //    int.Parse(ConfigurationManager.AppSettings[$"SmtpPort"]));
+
+        //});
+
+
+
+
+
+
+
+
     }
 }

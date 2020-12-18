@@ -1,4 +1,5 @@
-﻿using SchedulerEmailSender.Model;
+﻿using FluentEmail.Core;
+using SchedulerEmailSender.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace SchedulerEmailSender.Interface
 {
     public interface IEmailServices
     {
-        Task Send(Person person);
+        void Send(Person person);
         //Task<string> HtmlString(Person person);
         //Task Send(Person person);
 
