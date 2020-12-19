@@ -45,7 +45,7 @@ namespace Scheduler
                      Int32.Parse(ConfigurationManager.AppSettings[$"SmtpPort"]),
                      ConfigurationManager.AppSettings[$"MailAddress"],
                      ConfigurationManager.AppSettings[$"MailPassword"])
-                    .AddRazorRenderer()
+                    //.AddRazorRenderer()
                     ;
 
         }

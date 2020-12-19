@@ -1,5 +1,4 @@
 ﻿using FluentEmail.Core;
-using FluentEmail.Razor;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -80,19 +79,19 @@ namespace SchedulerEmailSender.Services
             // tu to powinno dzialac nie dziala
             // tu masz kod grzeska ja sie na nim wzorowalem 
             // https://github.com/Ryzoo/Scheduler
-            Log.Error("{@Person}", person);
+            Log.Information("{@Person}", person);
 
             var template = "hi @Model.Name this is a razor template @(5 + 5)!";
 
             using var scope = _serviceProvider.CreateScope();
 
-           scope.ServiceProvider.GetRequiredService<IFluentEmail>()
+            scope.ServiceProvider.GetRequiredService<IFluentEmail>()
                 .To(WhiteSpace.RemoveWhitespace(person.Email), person.FirstName)
                 .Subject(ConfigurationManager.AppSettings["MessageSubject"])
-                .UsingTemplate(template, person)
-                .Send();
+                //.UsingTemplate(template, person);
+            .Send();
 
-           
+
 
 
             //using (var scope = _serviceProvider.CreateScope())
